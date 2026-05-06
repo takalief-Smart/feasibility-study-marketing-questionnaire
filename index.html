@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان الدراسة التسويقية - تكاليف | دراسات الجدوى المصغرة</title>
+    <!-- Bootstrap RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- SheetJS -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1e4a3b 0%, #2d6a4e 100%);
+            min-height: 100vh;
+            color: #1e3a3a;
+            padding: 20px;
+        }
+        
+        .main-header {
+            background: linear-gradient(135deg, #0e3b2c 0%, #1b5e3f 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #52b788;
+        }
+        
+        .company-badge {
+            background: rgba(82, 183, 136, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 600;
+            border: 1px solid #52b788;
+            color: white;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+            background-color: #f8faf8;
+            border: 1px solid #e4f2e4;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #1e4a3b 0%, #2d6a4e 100%);
+            color: white;
+            border-radius: 20px 20px 0 0 !important;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-bottom: 2px solid #52b788;
+        }
+        
+        .btn-custom {
+            background: #52b788;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid #1e4a3b;
+        }
+        
+        .btn-custom:hover {
+            background: #2d6a4e;
+            transform: scale(1.05);
+            color: white;
+            box-shadow: 0 5px 20px rgba(82, 183, 136, 0.4);
+        }
+        
+        .btn-excel {
+            background: #1e4a3b;
+            color: white;
+            border: 2px solid #52b788;
+        }
+        
+        .btn-excel:hover {
+            background: #2d6a4e;
+            color: white;
+        }
+        
+        .btn-pdf {
+            background: #4a6b5a;
+            color: white;
+            border: 2px solid #52b788;
+        }
+        
+        .btn-pdf:hover {
+            background: #1e4a3b;
+            color: white;
+        }
+        
+        .form-label {
+            color: #2d6a4e;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e4f2e4;
+            border-radius: 10px;
+            padding: 0.75rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #52b788;
+            box-shadow: 0 0 0 0.2rem rgba(82, 183, 136, 0.25);
+        }
+        
+        .section-title {
+            color: #1e4a3b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-right: 4px solid #52b788;
+            padding-right: 1rem;
+        }
+        
+        .data-entry-section {
+            background: #f0f7f0;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 3px solid #52b788;
+        }
+        
+        .client-info-card {
+            background: linear-gradient(135deg, #f8faf8 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid #52b788;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .client-info-title {
+            color: #1e4a3b;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-info-title i {
+            color: #52b788;
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .currency-badge {
+            background: #52b788;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .info-text {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        
+        .required-field::after {
+            content: "*";
+            color: #dc3545;
+            margin-right: 4px;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #0e3b2c 0%, #1b5e3f 100%);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+            border-radius: 50px 50px 0 0;
+            border-top: 3px solid #52b788;
+        }
+        
+        .footer-links {
+            color: #e4f2e4;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links:hover {
+            color: #52b788;
+            padding-right: 5px;
+        }
+        
+        .contact-item {
+            margin-bottom: 10px;
+            color: #e4f2e4;
+        }
+        
+        .contact-item i {
+            color: #52b788;
+            margin-left: 10px;
+            width: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(82, 183, 136, 0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            color: #52b788;
+            transition: all 0.3s ease;
+            border: 1px solid #52b788;
+        }
+        
+        .social-icon:hover {
+            background: #52b788;
+            color: #0e3b2c;
+            transform: translateY(-3px);
+        }
+        
+        .service-badge {
+            background: #52b788;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-tabs-custom {
+            border-bottom: 3px solid #52b788;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #1e4a3b 0%, #2d6a4e 100%);
+            border-radius: 50px;
+            padding: 0.5rem;
+        }
+        
+        .nav-tabs-custom .nav-link {
+            color: white !important;
+            font-weight: 600;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs-custom .nav-link i {
+            color: white;
+        }
+        
+        .nav-tabs-custom .nav-link.active {
+            color: #1e4a3b !important;
+            background: #52b788;
+            border: 2px solid white;
+        }
+        
+        .nav-tabs-custom .nav-link.active i {
+            color: #1e4a3b;
+        }
+        
+        .preview-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid #52b788;
+            margin-bottom: 1.5rem;
+        }
+        
+        .preview-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #e4f2e4;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .preview-label {
+            font-weight: 600;
+            color: #1e4a3b;
+            width: 45%;
+        }
+        
+        .preview-value {
+            color: #2d6a4e;
+            width: 55%;
+            text-align: left;
+        }
+        
+        .rating-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .rating-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .rating-option input {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* PDF Export Container */
+        #pdf-export-container {
+            position: fixed;
+            top: -99999px;
+            left: -99999px;
+            width: 1200px;
+            background: white;
+            z-index: 9999;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .pdf-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            direction: rtl;
+        }
+        
+        .pdf-cover {
+            background: linear-gradient(135deg, #0e3b2c 0%, #1b5e3f 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            border: 4px solid #52b788;
+            text-align: center;
+        }
+        
+        .pdf-section-title {
+            color: #1e4a3b;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 40px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #52b788;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 14px;
+            border: 2px solid #52b788;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .pdf-table th {
+            background: #1e4a3b;
+            color: white;
+            padding: 15px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .pdf-table td {
+            padding: 12px 15px;
+            border: 1px solid #e4f2e4;
+            text-align: center;
+        }
+        
+        .pdf-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #0e3b2c 0%, #1b5e3f 100%);
+            color: white;
+            border-radius: 20px;
+            border: 3px solid #52b788;
+        }
+        
+        .form-check-input:checked {
+            background-color: #52b788;
+            border-color: #52b788;
+        }
+        
+        .competitor-item {
+            background: #f8faf8;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e4f2e4;
+        }
+        
+        .btn-add {
+            background: #52b788;
+            color: white;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border-radius: 50px;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="main-header text-center no-print">
+        <div class="container">
+            <span class="company-badge mb-3">تكاليف | حلول أعمال ذكية</span>
+            <h1 class="display-4 fw-bold mt-3" style="color: white;">
+                <i class="fas fa-chart-line me-3"></i>
+                استبيان الدراسة التسويقية
+            </h1>
+            <p class="lead" style="color: white;">خدمة دراسات الجدوى المصغرة - تحليل السوق والمنافسة والعملاء</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs-custom nav-fill" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="data-entry-tab" data-bs-toggle="tab" data-bs-target="#dataEntry" type="button" role="tab">
+                    <i class="fas fa-edit me-2"></i>
+                    استبيان المعلومات
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview" type="button" role="tab">
+                    <i class="fas fa-eye me-2"></i>
+                    معاينة التقرير
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Tab 1: Data Entry -->
+            <div class="tab-pane fade show active" id="dataEntry" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-database me-2"></i>
+                        استبيان الدراسة التسويقية - البيانات الأساسية
+                    </div>
+                    <div class="card-body">
+                        <!-- رأس الاستبيان مع العملة -->
+                        <div class="client-info-card">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="client-info-title">
+                                        <i class="fas fa-building"></i>
+                                        بيانات العميل
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">اسم العميل / الشركة</label>
+                                        <input type="text" class="form-control" id="clientName" placeholder="أدخل اسم العميل أو الشركة">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">اسم جهة الاتصال</label>
+                                        <input type="text" class="form-control" id="contactPerson" placeholder="أدخل اسم المسؤول عن المشروع">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="client-info-title">
+                                        <i class="fas fa-address-card"></i>
+                                        بيانات التواصل
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">رقم الهاتف</label>
+                                        <input type="tel" class="form-control" id="clientPhone" placeholder="أدخل رقم الهاتف">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">البريد الإلكتروني</label>
+                                        <input type="email" class="form-control" id="clientEmail" placeholder="example@company.com">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">العملة المستخدمة في التسعير</label>
+                                        <select class="form-select" id="currencySelect">
+                                            <option value="EGP" selected>🇪🇬 جنيه مصري (EGP)</option>
+                                            <option value="SAR">🇸🇦 ريال سعودي (SAR)</option>
+                                            <option value="AED">🇦🇪 درهم إماراتي (AED)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">تاريخ التعبئة</label>
+                                        <input type="date" class="form-control" id="submissionDate" value="2026-03-22">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="currency-badge mt-4" id="currencyDisplay">
+                                        <i class="fas fa-money-bill-wave me-2"></i>العملة: جنيه مصري
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 1: معلومات المشروع -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-info-circle me-2"></i>
+                                القسم الأول: معلومات المشروع
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">اسم المشروع</label>
+                                        <input type="text" class="form-control" id="projectName" placeholder="أدخل اسم المشروع">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">نشاط المشروع الرئيسي</label>
+                                        <select class="form-select" id="activityType">
+                                            <option value="">اختر النشاط الرئيسي</option>
+                                            <option value="commercial">تجاري (محلات - مراكز تجارية)</option>
+                                            <option value="industrial">صناعي (مصانع - خطوط إنتاج)</option>
+                                            <option value="service">خدمي (مطاعم - عيادات - صالات رياضية)</option>
+                                            <option value="agricultural">زراعي (مزارع - مشاتل)</option>
+                                            <option value="tourism">سياحي (فنادق - منتجعات)</option>
+                                            <option value="technology">تكنولوجي (برمجيات - تقنية معلومات)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">وصف المنتج / الخدمة المقدمة</label>
+                                        <textarea class="form-control" id="productDescription" rows="3" placeholder="وصف تفصيلي للمنتج أو الخدمة التي سيقدمها المشروع"></textarea>
+                                        <div class="info-text">اذكر المميزات والخصائص التي تميز منتجك/خدمتك</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 2: تحليل العملاء المستهدفين -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-users me-2"></i>
+                                القسم الثاني: تحليل العملاء المستهدفين
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label required-field">الفئة المستهدفة الرئيسية</label>
+                                        <input type="text" class="form-control" id="targetAudience" placeholder="مثال: الشباب 18-35 سنة، العائلات، الشركات الصغيرة">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">الخصائص الديموغرافية للعملاء</label>
+                                        <textarea class="form-control" id="demographics" rows="2" placeholder="العمر، الجنس، المستوى التعليمي، الدخل، الموقع الجغرافي"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">الخصائص النفسية والسلوكية</label>
+                                        <textarea class="form-control" id="psychographics" rows="2" placeholder="الاهتمامات، نمط الحياة، سلوك الشراء، الولاء للعلامات التجارية"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">احتياجات وتوقعات العملاء</label>
+                                        <textarea class="form-control" id="customerNeeds" rows="2" placeholder="ما الذي يبحث عنه العملاء؟ ما المشكلات التي يحتاجون لحلها؟"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">حجم السوق المستهدف (تقديري)</label>
+                                        <input type="text" class="form-control" id="marketSize" placeholder="مثال: 10,000 عميل محتمل">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">معدل النمو السنوي المتوقع للسوق</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="marketGrowth" placeholder="مثال: 8">
+                                            <span class="input-group-text bg-light">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">متوسط تكرار الشراء المتوقع</label>
+                                        <input type="text" class="form-control" id="purchaseFrequency" placeholder="مثال: شهري، أسبوعي، موسمي">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 3: تحليل المنافسة -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-chart-line me-2"></i>
+                                القسم الثالث: تحليل المنافسة
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">المنافسون الرئيسيون (أضف المنافسين)</label>
+                                        <div id="competitorsContainer">
+                                            <div class="competitor-item" id="competitor-1">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control" placeholder="اسم المنافس" id="competitorName1">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control" placeholder="نقاط القوة / الضعف" id="competitorStrength1">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-danger btn-sm" onclick="removeCompetitor(1)" style="display:none;" id="removeCompetitor1">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-custom btn-sm mt-2" onclick="addCompetitor()">
+                                            <i class="fas fa-plus-circle me-1"></i> إضافة منافس
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">نقاط القوة التنافسية للمشروع</label>
+                                        <textarea class="form-control" id="competitiveAdvantage" rows="3" placeholder="ما الذي يميز مشروعك عن المنافسين؟ (جودة، سعر، خدمة، موقع، خبرة)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">الحصة السوقية المستهدفة</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="targetMarketShare" placeholder="مثال: 15">
+                                            <span class="input-group-text bg-light">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">مستوى المنافسة في السوق</label>
+                                        <select class="form-select" id="competitionLevel">
+                                            <option value="">اختر مستوى المنافسة</option>
+                                            <option value="low">منخفض - قلة المنافسين</option>
+                                            <option value="medium">متوسط - عدد محدود من المنافسين</option>
+                                            <option value="high">مرتفع - منافسة شديدة</option>
+                                            <option value="veryHigh">مرتفع جداً - سوق مشبع</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 4: استراتيجية التسويق -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-bullhorn me-2"></i>
+                                القسم الرابع: استراتيجية التسويق
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">قنوات التسويق المقترحة</label>
+                                        <textarea class="form-control" id="marketingChannels" rows="3" placeholder="وسائل التواصل الاجتماعي، الإعلانات المطبوعة، الإعلانات الرقمية، المعارض، التسويق المباشر، العلاقات العامة"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">الميزانية التسويقية المتوقعة</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="marketingBudget" placeholder="الميزانية التسويقية">
+                                            <span class="input-group-text bg-light currency-symbol">جنيه</span>
+                                        </div>
+                                        <div class="info-text">الميزانية السنوية المتوقعة للتسويق والإعلان</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">استراتيجية التسعير</label>
+                                        <select class="form-select" id="pricingStrategy">
+                                            <option value="">اختر استراتيجية التسعير</option>
+                                            <option value="premium">متميز (Premium) - أسعار أعلى مقابل جودة عالية</option>
+                                            <option value="competitive">تنافسي - أسعار مماثلة للمنافسين</option>
+                                            <option value="penetration">اختراق - أسعار منخفضة لدخول السوق</option>
+                                            <option value="economy">اقتصادي - أسعار منخفضة باستمرار</option>
+                                            <option value="value">قيمة - سعر يتناسب مع القيمة المقدمة</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">السعر المتوقع للوحدة / الخدمة</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="expectedPrice" placeholder="السعر المتوقع">
+                                            <span class="input-group-text bg-light currency-symbol">جنيه</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">سياسات الخصم والعروض</label>
+                                        <input type="text" class="form-control" id="discountPolicy" placeholder="مثال: خصم 10% للدفع النقدي، عروض موسمية">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 5: تحليل SWOT -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-chart-simple me-2"></i>
+                                القسم الخامس: تحليل SWOT
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نقاط القوة (Strengths)</label>
+                                        <textarea class="form-control" id="strengths" rows="3" placeholder="المزايا الداخلية للمشروع (خبرة، موقع، جودة، سمعة)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">نقاط الضعف (Weaknesses)</label>
+                                        <textarea class="form-control" id="weaknesses" rows="3" placeholder="التحديات الداخلية (قلة الخبرة، نقص التمويل، ضعف العلامة التجارية)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">الفرص المتاحة (Opportunities)</label>
+                                        <textarea class="form-control" id="opportunities" rows="3" placeholder="الفرص الخارجية (نمو السوق، توجهات جديدة، دعم حكومي)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">التهديدات (Threats)</label>
+                                        <textarea class="form-control" id="threats" rows="3" placeholder="التهديدات الخارجية (منافسة جديدة، تغيرات اقتصادية، تغيرات قانونية)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- القسم 6: المخاطر التسويقية -->
+                        <div class="data-entry-section">
+                            <h4 class="mb-4" style="color: #1e4a3b;">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                القسم السادس: المخاطر التسويقية
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">أبرز المخاطر التسويقية المتوقعة</label>
+                                        <textarea class="form-control" id="marketingRisks" rows="3" placeholder="مخاطر تتعلق بتغير taste العملاء، دخول منافسين جدد، تغير الأسعار"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">خطط تخفيف المخاطر</label>
+                                        <textarea class="form-control" id="riskMitigation" rows="3" placeholder="كيف ستتعامل مع المخاطر المتوقعة؟"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">ملاحظات إضافية</label>
+                                        <textarea class="form-control" id="additionalNotes" rows="2" placeholder="أي معلومات إضافية تتعلق بالدراسة التسويقية"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- أزرار الإجراء -->
+                        <div class="text-center mt-4">
+                            <button class="btn btn-custom btn-lg" onclick="refreshPreview()">
+                                <i class="fas fa-sync-alt me-2"></i>
+                                تحديث المعاينة
+                            </button>
+                            <button class="btn btn-custom btn-lg mx-2" onclick="resetForm()">
+                                <i class="fas fa-undo me-2"></i>
+                                إعادة تعيين
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Preview -->
+            <div class="tab-pane fade" id="preview" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt me-2"></i>
+                        معاينة تقرير الدراسة التسويقية
+                    </div>
+                    <div class="card-body" id="previewContent">
+                        <!-- سيتم تعبئتها ديناميكياً -->
+                    </div>
+                </div>
+
+                <!-- أزرار التصدير -->
+                <div class="text-center mb-4 no-print">
+                    <button class="btn btn-excel btn-lg mx-2" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel me-2"></i>
+                        تصدير (Excel)
+                    </button>
+                    <button class="btn btn-pdf btn-lg mx-2" onclick="exportToPDF(event)">
+                        <i class="fas fa-file-pdf me-2"></i>
+                        تصدير التقرير (PDF)
+                    </button>
+                    <button class="btn btn-custom btn-lg mx-2" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i>
+                        طباعة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer no-print">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #52b788; margin-bottom: 20px;">
+                        تكاليف - حلول أعمال ذكية
+                    </h5>
+                    <p style="color: #e4f2e4; line-height: 1.8;">
+                        نقدم استبيانات متخصصة للدراسات التسويقية لتحليل السوق والعملاء والمنافسة.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #52b788; margin-bottom: 20px;">
+                        <i class="fas fa-address-card me-2"></i>
+                        معلومات الاتصال
+                    </h5>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        القاهرة - مصر
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:+201044391177" class="footer-links">+20 104 439 1177</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:info@takalief.com" class="footer-links">info@takalief.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="https://www.takalief.com" class="footer-links" target="_blank">www.takalief.com</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #52b788; margin-bottom: 20px;">
+                        <i class="fas fa-share-alt me-2"></i>
+                        تابعنا على
+                    </h5>
+                    <div class="text-center">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-3">
+                <div class="col-md-6 text-md-start text-center">
+                    <p class="mb-0" style="color: #e4f2e4;">
+                        <i class="fas fa-copyright me-2" style="color: #52b788;"></i>
+                        2026 تكاليف - حلول أعمال ذكية. جميع الحقوق محفوظة
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end text-center">
+                    <a href="#" class="footer-links me-3">سياسة الخصوصية</a>
+                    <a href="#" class="footer-links me-3">شروط الاستخدام</a>
+                    <a href="#" class="footer-links">الدعم الفني</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PDF Export Container -->
+    <div id="pdf-export-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let selectedCurrency = 'EGP';
+        let competitorCount = 1;
+        
+        const currencySymbols = {
+            'EGP': 'جنيه',
+            'SAR': 'ريال',
+            'AED': 'درهم'
+        };
+        
+        const currencyNames = {
+            'EGP': 'جنيه مصري',
+            'SAR': 'ريال سعودي',
+            'AED': 'درهم إماراتي'
+        };
+        
+        // تحديث العملة
+        document.getElementById('currencySelect').addEventListener('change', function() {
+            selectedCurrency = this.value;
+            document.getElementById('currencyDisplay').innerHTML = `<i class="fas fa-money-bill-wave me-2"></i>العملة: ${currencyNames[selectedCurrency]}`;
+            updateCurrencySymbols();
+        });
+        
+        function updateCurrencySymbols() {
+            const symbol = currencySymbols[selectedCurrency];
+            document.querySelectorAll('.currency-symbol').forEach(el => {
+                el.textContent = symbol;
+            });
+        }
+        
+        // إضافة منافس
+        function addCompetitor() {
+            competitorCount++;
+            const container = document.getElementById('competitorsContainer');
+            const newCompetitor = document.createElement('div');
+            newCompetitor.className = 'competitor-item';
+            newCompetitor.id = `competitor-${competitorCount}`;
+            newCompetitor.innerHTML = `
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" placeholder="اسم المنافس" id="competitorName${competitorCount}">
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" placeholder="نقاط القوة / الضعف" id="competitorStrength${competitorCount}">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-danger btn-sm" onclick="removeCompetitor(${competitorCount})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newCompetitor);
+        }
+        
+        function removeCompetitor(id) {
+            const element = document.getElementById(`competitor-${id}`);
+            if (element) {
+                element.remove();
+            }
+        }
+        
+        function getFieldValue(id, defaultValue = '—') {
+            const element = document.getElementById(id);
+            return element && element.value.trim() !== '' ? element.value.trim() : defaultValue;
+        }
+        
+        function getSelectText(id, defaultValue = '—') {
+            const select = document.getElementById(id);
+            const selectedOption = select.options[select.selectedIndex];
+            return selectedOption && selectedOption.value !== '' ? selectedOption.text : defaultValue;
+        }
+        
+        function getCompetitorsList() {
+            let competitorsHtml = '';
+            for (let i = 1; i <= competitorCount; i++) {
+                const nameElem = document.getElementById(`competitorName${i}`);
+                const strengthElem = document.getElementById(`competitorStrength${i}`);
+                if (nameElem && nameElem.value.trim() !== '') {
+                    competitorsHtml += `<div class="preview-item"><span class="preview-label">المنافس ${i}</span><span class="preview-value">${nameElem.value} - ${strengthElem ? strengthElem.value : '—'}</span></div>`;
+                }
+            }
+            return competitorsHtml || '<div class="preview-item"><span class="preview-label">المنافسون</span><span class="preview-value">—</span></div>';
+        }
+        
+        // تحديث المعاينة
+        function refreshPreview() {
+            const previewHtml = `
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-building me-2"></i>
+                        بيانات العميل والمشروع
+                    </h4>
+                    <div class="preview-item">
+                        <span class="preview-label">اسم العميل</span>
+                        <span class="preview-value">${getFieldValue('clientName')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">جهة الاتصال</span>
+                        <span class="preview-value">${getFieldValue('contactPerson')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">رقم الهاتف</span>
+                        <span class="preview-value">${getFieldValue('clientPhone')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">البريد الإلكتروني</span>
+                        <span class="preview-value">${getFieldValue('clientEmail')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">العملة المستخدمة</span>
+                        <span class="preview-value">${currencyNames[selectedCurrency]}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">اسم المشروع</span>
+                        <span class="preview-value">${getFieldValue('projectName')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">نشاط المشروع</span>
+                        <span class="preview-value">${getSelectText('activityType')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">وصف المنتج/الخدمة</span>
+                        <span class="preview-value">${getFieldValue('productDescription')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-users me-2"></i>
+                        تحليل العملاء المستهدفين
+                    </h4>
+                    <div class="preview-item">
+                        <span class="preview-label">الفئة المستهدفة</span>
+                        <span class="preview-value">${getFieldValue('targetAudience')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">الخصائص الديموغرافية</span>
+                        <span class="preview-value">${getFieldValue('demographics')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">الخصائص النفسية والسلوكية</span>
+                        <span class="preview-value">${getFieldValue('psychographics')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">احتياجات وتوقعات العملاء</span>
+                        <span class="preview-value">${getFieldValue('customerNeeds')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">حجم السوق المستهدف</span>
+                        <span class="preview-value">${getFieldValue('marketSize')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">معدل النمو السنوي</span>
+                        <span class="preview-value">${getFieldValue('marketGrowth')}%</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">متوسط تكرار الشراء</span>
+                        <span class="preview-value">${getFieldValue('purchaseFrequency')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-chart-line me-2"></i>
+                        تحليل المنافسة
+                    </h4>
+                    ${getCompetitorsList()}
+                    <div class="preview-item">
+                        <span class="preview-label">نقاط القوة التنافسية</span>
+                        <span class="preview-value">${getFieldValue('competitiveAdvantage')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">الحصة السوقية المستهدفة</span>
+                        <span class="preview-value">${getFieldValue('targetMarketShare')}%</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">مستوى المنافسة</span>
+                        <span class="preview-value">${getSelectText('competitionLevel')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-bullhorn me-2"></i>
+                        استراتيجية التسويق
+                    </h4>
+                    <div class="preview-item">
+                        <span class="preview-label">قنوات التسويق</span>
+                        <span class="preview-value">${getFieldValue('marketingChannels')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">الميزانية التسويقية</span>
+                        <span class="preview-value">${getFieldValue('marketingBudget')} ${currencySymbols[selectedCurrency]}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">استراتيجية التسعير</span>
+                        <span class="preview-value">${getSelectText('pricingStrategy')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">السعر المتوقع للوحدة</span>
+                        <span class="preview-value">${getFieldValue('expectedPrice')} ${currencySymbols[selectedCurrency]}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">سياسات الخصم والعروض</span>
+                        <span class="preview-value">${getFieldValue('discountPolicy')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-chart-simple me-2"></i>
+                        تحليل SWOT
+                    </h4>
+                    <div class="preview-item">
+                        <span class="preview-label">نقاط القوة (S)</span>
+                        <span class="preview-value">${getFieldValue('strengths')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">نقاط الضعف (W)</span>
+                        <span class="preview-value">${getFieldValue('weaknesses')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">الفرص (O)</span>
+                        <span class="preview-value">${getFieldValue('opportunities')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">التهديدات (T)</span>
+                        <span class="preview-value">${getFieldValue('threats')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h4 style="color: #1e4a3b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        المخاطر التسويقية
+                    </h4>
+                    <div class="preview-item">
+                        <span class="preview-label">المخاطر المتوقعة</span>
+                        <span class="preview-value">${getFieldValue('marketingRisks')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">خطط تخفيف المخاطر</span>
+                        <span class="preview-value">${getFieldValue('riskMitigation')}</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">ملاحظات إضافية</span>
+                        <span class="preview-value">${getFieldValue('additionalNotes')}</span>
+                    </div>
+                </div>
+                
+                <div class="preview-card text-center">
+                    <hr>
+                    <p style="color: #1e4a3b; font-weight: 600;">
+                        <i class="fas fa-check-circle me-2"></i>
+                        تم تعبئة الاستبيان التسويقي بنجاح
+                    </p>
+                    <p class="text-muted small">تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
+                </div>
+            `;
+            
+            document.getElementById('previewContent').innerHTML = previewHtml;
+        }
+        
+        // إعادة تعيين النموذج
+        function resetForm() {
+            if (confirm('هل أنت متأكد من إعادة تعيين جميع البيانات؟')) {
+                const inputs = document.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    if (input.type !== 'button' && input.id !== 'currencySelect' && !input.id.startsWith('competitor')) {
+                        if (input.type === 'date') {
+                            input.value = '2026-03-22';
+                        } else if (input.tagName === 'SELECT') {
+                            input.selectedIndex = 0;
+                        } else {
+                            input.value = '';
+                        }
+                    }
+                });
+                
+                // إعادة تعيين المنافسين
+                const container = document.getElementById('competitorsContainer');
+                container.innerHTML = `
+                    <div class="competitor-item" id="competitor-1">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" placeholder="اسم المنافس" id="competitorName1">
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" placeholder="نقاط القوة / الضعف" id="competitorStrength1">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-danger btn-sm" onclick="removeCompetitor(1)" style="display:none;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                competitorCount = 1;
+                
+                document.getElementById('currencySelect').value = 'EGP';
+                selectedCurrency = 'EGP';
+                updateCurrencySymbols();
+                refreshPreview();
+                alert('تم إعادة تعيين جميع البيانات بنجاح');
+            }
+        }
+        
+        // تصدير Excel
+        function exportToExcel() {
+            const clientName = getFieldValue('clientName', 'عميل');
+            const projectName = getFieldValue('projectName', 'مشروع');
+            
+            // جمع بيانات المنافسين
+            let competitorsText = '';
+            for (let i = 1; i <= competitorCount; i++) {
+                const nameElem = document.getElementById(`competitorName${i}`);
+                const strengthElem = document.getElementById(`competitorStrength${i}`);
+                if (nameElem && nameElem.value.trim() !== '') {
+                    competitorsText += `${nameElem.value} (${strengthElem ? strengthElem.value : '—'})\n`;
+                }
+            }
+            
+            const excelData = [
+                ['استبيان الدراسة التسويقية - تكاليف'],
+                ['تاريخ التقرير', new Date().toLocaleDateString('ar-EG')],
+                ['العملة', currencyNames[selectedCurrency]],
+                [],
+                ['1. بيانات العميل'],
+                ['اسم العميل', getFieldValue('clientName')],
+                ['جهة الاتصال', getFieldValue('contactPerson')],
+                ['رقم الهاتف', getFieldValue('clientPhone')],
+                ['البريد الإلكتروني', getFieldValue('clientEmail')],
+                [],
+                ['2. معلومات المشروع'],
+                ['اسم المشروع', getFieldValue('projectName')],
+                ['نشاط المشروع', getSelectText('activityType')],
+                ['وصف المنتج/الخدمة', getFieldValue('productDescription')],
+                [],
+                ['3. تحليل العملاء المستهدفين'],
+                ['الفئة المستهدفة', getFieldValue('targetAudience')],
+                ['الخصائص الديموغرافية', getFieldValue('demographics')],
+                ['الخصائص النفسية والسلوكية', getFieldValue('psychographics')],
+                ['احتياجات وتوقعات العملاء', getFieldValue('customerNeeds')],
+                ['حجم السوق المستهدف', getFieldValue('marketSize')],
+                ['معدل النمو السنوي', getFieldValue('marketGrowth') + '%'],
+                ['متوسط تكرار الشراء', getFieldValue('purchaseFrequency')],
+                [],
+                ['4. تحليل المنافسة'],
+                ['المنافسون', competitorsText],
+                ['نقاط القوة التنافسية', getFieldValue('competitiveAdvantage')],
+                ['الحصة السوقية المستهدفة', getFieldValue('targetMarketShare') + '%'],
+                ['مستوى المنافسة', getSelectText('competitionLevel')],
+                [],
+                ['5. استراتيجية التسويق'],
+                ['قنوات التسويق', getFieldValue('marketingChannels')],
+                ['الميزانية التسويقية', getFieldValue('marketingBudget') + ' ' + currencySymbols[selectedCurrency]],
+                ['استراتيجية التسعير', getSelectText('pricingStrategy')],
+                ['السعر المتوقع للوحدة', getFieldValue('expectedPrice') + ' ' + currencySymbols[selectedCurrency]],
+                ['سياسات الخصم', getFieldValue('discountPolicy')],
+                [],
+                ['6. تحليل SWOT'],
+                ['نقاط القوة', getFieldValue('strengths')],
+                ['نقاط الضعف', getFieldValue('weaknesses')],
+                ['الفرص', getFieldValue('opportunities')],
+                ['التهديدات', getFieldValue('threats')],
+                [],
+                ['7. المخاطر التسويقية'],
+                ['المخاطر المتوقعة', getFieldValue('marketingRisks')],
+                ['خطط تخفيف المخاطر', getFieldValue('riskMitigation')],
+                ['ملاحظات إضافية', getFieldValue('additionalNotes')],
+                [],
+                ['توقيع العميل', '_________________________'],
+                ['تاريخ التسليم', new Date().toLocaleDateString('ar-EG')],
+                [],
+                ['للتواصل: info@takalief.com | +20 104 439 1177'],
+                ['www.takalief.com']
+            ];
+            
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            ws['!cols'] = [{ wch: 35 }, { wch: 50 }];
+            XLSX.utils.book_append_sheet(wb, ws, 'الدراسة التسويقية');
+            XLSX.writeFile(wb, `Marketing_Study_${projectName.replace(/\s/g, '_')}_${new Date().toISOString().slice(0,10)}.xlsx`);
+            
+            alert('تم تصدير استبيان Excel بنجاح!');
+        }
+        
+        // تصدير PDF
+        async function exportToPDF(event) {
+            try {
+                const exportBtn = event.target;
+                const originalText = exportBtn.innerHTML;
+                exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> جاري إعداد التقرير...';
+                exportBtn.disabled = true;
+                
+                const pdfContainer = document.getElementById('pdf-export-container');
+                pdfContainer.innerHTML = '';
+                pdfContainer.style.opacity = '1';
+                pdfContainer.style.position = 'absolute';
+                pdfContainer.style.top = '0';
+                pdfContainer.style.left = '0';
+                pdfContainer.style.zIndex = '9999';
+                
+                const clientName = getFieldValue('clientName', 'غير محدد');
+                const projectName = getFieldValue('projectName', 'غير محدد');
+                
+                // جمع بيانات المنافسين
+                let competitorsHtml = '';
+                for (let i = 1; i <= competitorCount; i++) {
+                    const nameElem = document.getElementById(`competitorName${i}`);
+                    const strengthElem = document.getElementById(`competitorStrength${i}`);
+                    if (nameElem && nameElem.value.trim() !== '') {
+                        competitorsHtml += `<tr><td>${nameElem.value}</td><td>${strengthElem ? strengthElem.value : '—'}</td></tr>`;
+                    }
+                }
+                
+                const pdfWrapper = document.createElement('div');
+                pdfWrapper.className = 'pdf-wrapper';
+                
+                // الغلاف
+                const coverPage = document.createElement('div');
+                coverPage.className = 'pdf-cover';
+                coverPage.innerHTML = `
+                    <h1>الدراسة التسويقية</h1>
+                    <h3>Marketing Study Questionnaire</h3>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-top: 30px;">
+                        <p style="font-size: 20px;"><i class="fas fa-user me-2"></i>العميل: ${clientName}</p>
+                        <p style="font-size: 18px;"><i class="fas fa-project-diagram me-2"></i>المشروع: ${projectName}</p>
+                        <p style="font-size: 18px;"><i class="fas fa-money-bill-wave me-2"></i>العملة: ${currencyNames[selectedCurrency]}</p>
+                        <p style="font-size: 18px;"><i class="fas fa-calendar me-2"></i>تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}</p>
+                    </div>
+                `;
+                pdfWrapper.appendChild(coverPage);
+                
+                // بيانات العميل والمشروع
+                const clientPage = document.createElement('div');
+                clientPage.style.pageBreakBefore = 'always';
+                clientPage.style.padding = '20px';
+                clientPage.innerHTML = `
+                    <h2 class="pdf-section-title">بيانات العميل والمشروع</h2>
+                    <table class="pdf-table">
+                        <tr><th>البيان</th><th>القيمة</th></tr>
+                        <tr><td>اسم العميل</td><td>${getFieldValue('clientName')}</td></tr>
+                        <tr><td>جهة الاتصال</td><td>${getFieldValue('contactPerson')}</td></tr>
+                        <tr><td>رقم الهاتف</td><td>${getFieldValue('clientPhone')}</td></tr>
+                        <tr><td>البريد الإلكتروني</td><td>${getFieldValue('clientEmail')}</td></tr>
+                        <tr><td>اسم المشروع</td><td>${getFieldValue('projectName')}</td></tr>
+                        <tr><td>نشاط المشروع</td><td>${getSelectText('activityType')}</td></tr>
+                        <tr><td>وصف المنتج/الخدمة</td><td>${getFieldValue('productDescription')}</td></tr>
+                    </table>
+                    
+                    <h2 class="pdf-section-title">تحليل العملاء المستهدفين</h2>
+                    <table class="pdf-table">
+                        <tr><th>البيان</th><th>القيمة</th></tr>
+                        <tr><td>الفئة المستهدفة</td><td>${getFieldValue('targetAudience')}</td></tr>
+                        <tr><td>الخصائص الديموغرافية</td><td>${getFieldValue('demographics')}</td></tr>
+                        <tr><td>الخصائص النفسية والسلوكية</td><td>${getFieldValue('psychographics')}</td></tr>
+                        <tr><td>احتياجات العملاء</td><td>${getFieldValue('customerNeeds')}</td></tr>
+                        <tr><td>حجم السوق المستهدف</td><td>${getFieldValue('marketSize')}</td></tr>
+                        <tr><td>معدل النمو السنوي</td><td>${getFieldValue('marketGrowth')}%</td></tr>
+                    </table>
+                `;
+                pdfWrapper.appendChild(clientPage);
+                
+                // المنافسة والتسويق
+                const marketingPage = document.createElement('div');
+                marketingPage.style.pageBreakBefore = 'always';
+                marketingPage.style.padding = '20px';
+                marketingPage.innerHTML = `
+                    <h2 class="pdf-section-title">تحليل المنافسة</h2>
+                    <table class="pdf-table">
+                        <tr><th>اسم المنافس</th><th>نقاط القوة / الضعف</th></tr>
+                        ${competitorsHtml || '<tr><td colspan="2">—</td></tr>'}
+                    </table>
+                    <table class="pdf-table">
+                        <tr><td>نقاط القوة التنافسية</td><td>${getFieldValue('competitiveAdvantage')}</td></tr>
+                        <tr><td>الحصة السوقية المستهدفة</td><td>${getFieldValue('targetMarketShare')}%</td></tr>
+                        <tr><td>مستوى المنافسة</td><td>${getSelectText('competitionLevel')}</td></tr>
+                    </table>
+                    
+                    <h2 class="pdf-section-title">استراتيجية التسويق</h2>
+                    <table class="pdf-table">
+                        <tr><td>قنوات التسويق</td><td>${getFieldValue('marketingChannels')}</td></tr>
+                        <tr><td>الميزانية التسويقية</td><td>${getFieldValue('marketingBudget')} ${currencySymbols[selectedCurrency]}</td></tr>
+                        <tr><td>استراتيجية التسعير</td><td>${getSelectText('pricingStrategy')}</td></tr>
+                        <tr><td>السعر المتوقع للوحدة</td><td>${getFieldValue('expectedPrice')} ${currencySymbols[selectedCurrency]}</td></tr>
+                        <tr><td>سياسات الخصم</td><td>${getFieldValue('discountPolicy')}</td></tr>
+                    </table>
+                `;
+                pdfWrapper.appendChild(marketingPage);
+                
+                // SWOT والمخاطر
+                const swotPage = document.createElement('div');
+                swotPage.style.pageBreakBefore = 'always';
+                swotPage.style.padding = '20px';
+                swotPage.innerHTML = `
+                    <h2 class="pdf-section-title">تحليل SWOT</h2>
+                    <table class="pdf-table">
+                        <tr><td style="background:#e4f2e4;"><strong>نقاط القوة (S)</strong></td><td>${getFieldValue('strengths')}</td></tr>
+                        <tr><td style="background:#e4f2e4;"><strong>نقاط الضعف (W)</strong></td><td>${getFieldValue('weaknesses')}</td></tr>
+                        <tr><td style="background:#e4f2e4;"><strong>الفرص (O)</strong></td><td>${getFieldValue('opportunities')}</td></tr>
+                        <tr><td style="background:#e4f2e4;"><strong>التهديدات (T)</strong></td><td>${getFieldValue('threats')}</td></tr>
+                    </table>
+                    
+                    <h2 class="pdf-section-title">المخاطر التسويقية</h2>
+                    <table class="pdf-table">
+                        <tr><td>المخاطر المتوقعة</td><td>${getFieldValue('marketingRisks')}</td></tr>
+                        <tr><td>خطط تخفيف المخاطر</td><td>${getFieldValue('riskMitigation')}</td></tr>
+                        <tr><td>ملاحظات إضافية</td><td>${getFieldValue('additionalNotes')}</td></tr>
+                    </table>
+                `;
+                pdfWrapper.appendChild(swotPage);
+                
+                // صفحة الختام
+                const closingPage = document.createElement('div');
+                closingPage.style.pageBreakBefore = 'always';
+                closingPage.style.padding = '40px 20px';
+                closingPage.innerHTML = `
+                    <div class="pdf-footer">
+                        <div class="company">تكاليف - حلول أعمال ذكية</div>
+                        <div>القاهرة - مصر | +20 104 439 1177 | info@takalief.com</div>
+                        <hr style="width: 200px; margin: 20px auto;">
+                        <p>تم تعبئة هذا الاستبيان التسويقي لإعداد الدراسة التسويقية للمشروع</p>
+                        <p>تاريخ الإصدار: ${new Date().toLocaleDateString('ar-EG')}</p>
+                        <p style="margin-top: 30px;">توقيع العميل: _________________________</p>
+                        <p>جميع الحقوق محفوظة © 2026</p>
+                    </div>
+                `;
+                pdfWrapper.appendChild(closingPage);
+                
+                pdfContainer.appendChild(pdfWrapper);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const canvas = await html2canvas(pdfContainer, { scale: 2, backgroundColor: '#ffffff' });
+                const { jsPDF } = window.jspdf;
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210;
+                const pageHeight = 297;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+                heightLeft -= pageHeight;
+                
+                while (heightLeft > 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+                    heightLeft -= pageHeight;
+                }
+                
+                pdf.save(`Marketing_Study_${projectName.replace(/[^\u0600-\u06FFa-zA-Z0-9]/g, '_')}_${new Date().toISOString().slice(0,10)}.pdf`);
+                
+                pdfContainer.innerHTML = '';
+                pdfContainer.style.opacity = '0';
+                pdfContainer.style.position = 'fixed';
+                pdfContainer.style.top = '-99999px';
+                
+                exportBtn.innerHTML = originalText;
+                exportBtn.disabled = false;
+                alert('تم تصدير استبيان PDF بنجاح!');
+                
+            } catch (error) {
+                alert('حدث خطأ أثناء تصدير التقرير: ' + error.message);
+                const exportBtn = event.target;
+                exportBtn.innerHTML = '<i class="fas fa-file-pdf me-2"></i> تصدير التقرير (PDF)';
+                exportBtn.disabled = false;
+            }
+        }
+        
+        // تهيئة الصفحة
+        window.onload = function() {
+            updateCurrencySymbols();
+            refreshPreview();
+        };
+    </script>
+</body>
+</html>
